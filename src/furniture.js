@@ -10,3 +10,18 @@ export async function addNewFurniture(req, res) {
     })
   res.status(201).send({ message: 'New Furniture Added.' })
 }
+
+export async function getAllFurniture(req, res) {
+  const db = dbConnect()
+  const collection = await db.collection("furniture").find().toArray()
+  res.send(collection)
+}
+
+export async function findFurnitureByModel(req, res) {
+  const db = dbConnect()
+  const { search } = req.params
+  const collection = await db.collection("furniture")
+    .find({ model: search })
+    .toArray()
+  res.send(collection)
+}
